@@ -30,18 +30,14 @@ Abrí http://localhost:3000
 
 ## Cloud Shell
 
-Mismo esquema que series. En Cloud Shell, con la URI de Atlas (base `notas`, no `series`):
-
 ```bash
 gcloud config set project "$(gcloud projects list --filter='projectNumber=6451687015' --format='value(projectId)')"
 git clone https://github.com/DanyPreisz/notas-vanilla.git
 cd notas-vanilla
-export JWT_SECRET="$(openssl rand -hex 32)"
-export MONGODB_URI="mongodb+srv://USUARIO:PASSWORD@cluster0.xxxxx.mongodb.net/notas?retryWrites=true&w=majority&authSource=admin"
 bash cloud-shell.sh
 ```
 
-`JWT_SECRET` es el token que pide el front. Atlas tiene que aceptar `0.0.0.0/0`.
+El script arma el mismo `env-vars-file` que series, con la URI de Atlas y `MONGODB_DB: notas` para no mezclar las notas con la base `series`. Imprime el `JWT_SECRET`: ese es el token que pide el front.
 
 La primera vez, en esta máquina:
 
