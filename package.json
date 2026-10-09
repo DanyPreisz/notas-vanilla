@@ -1,0 +1,16 @@
+{
+  "name": "notas-vanilla",
+  "version": "1.0.0",
+  "description": "Notas personales: front vanilla, API en Node y MongoDB. Lista para Cloud Run.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "mongodb": "^6.20.0"
+  }
+}
