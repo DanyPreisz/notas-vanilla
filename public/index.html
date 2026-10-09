@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Notas</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div>
+          <p class="eyebrow">API REST · vanilla JS</p>
+          <h1>Notas</h1>
+        </div>
+        <button type="button" class="btn primary" id="new-note">Nueva nota</button>
+      </header>
+
+      <div class="layout">
+        <aside class="list-pane">
+          <label class="search">
+            <span class="sr-only">Buscar</span>
+            <input id="search" type="search" placeholder="Buscar por título o texto" />
+          </label>
+          <p class="count" id="count"></p>
+          <ul class="notes" id="notes"></ul>
+        </aside>
+
+        <main class="editor" id="editor">
+          <form id="form" hidden>
+            <label>
+              Título
+              <input id="title" name="title" maxlength="120" required placeholder="Sin título" />
+            </label>
+            <label class="grow">
+              Contenido
+              <textarea id="body" name="body" maxlength="20000" required placeholder="Escribí la nota..."></textarea>
+            </label>
+            <p class="meta" id="meta"></p>
+            <p class="error" id="error" hidden></p>
+            <div class="actions">
+              <button type="submit" class="btn primary" id="save">Guardar</button>
+              <button type="button" class="btn danger" id="delete" hidden>Borrar</button>
+              <button type="button" class="btn ghost" id="cancel">Cerrar</button>
+            </div>
+          </form>
+          <section class="empty" id="empty">
+            <h2>Ninguna nota abierta</h2>
+            <p>Elegí una de la lista o creá una nueva. El front habla con <code>/api/notes</code>.</p>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>
