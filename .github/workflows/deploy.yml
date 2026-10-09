@@ -1,0 +1,28 @@
+name: Deploy Cloud Run
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: Publicar
+        env:
+          CI: "true"
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_DB: ${{ secrets.MONGODB_DB }}
+          NOTES_TOKEN: ${{ secrets.NOTES_TOKEN }}
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          REGION: europe-west1
+        run: bash deploy-cloud-run.sh

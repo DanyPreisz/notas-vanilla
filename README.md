@@ -17,33 +17,44 @@ Si definís `NOTES_TOKEN`, la API exige `Authorization: Bearer <token>`. El fron
 
 ## Local
 
-1. En Atlas: cluster, usuario de base y Network Access con tu IP (o `0.0.0.0/0` si vas a Cloud Run).
+1. En Atlas: cluster, usuario de base y Network Access con tu IP, o `0.0.0.0/0` si vas a Cloud Run.
 2. Copiá `.env.example` a `.env` y completá `MONGODB_URI`. No subas `.env`.
 3. Arrancá:
 
 ```bash
 npm install
-export MONGODB_URI="mongodb+srv://..."
-export MONGODB_DB=notas
 npm start
 ```
 
 Abrí http://localhost:3000
 
+## Cloud Run, un comando
+
+La primera vez, en esta máquina:
+
+```bash
+gcloud auth login
+gcloud config set project TU_PROYECTO
+```
+
+Después, cada subida:
+
+```bash
+npm run deploy
+```
+
+El script lee `.env`, activa Run / Cloud Build / Artifact Registry y publica `notas-vanilla` en `europe-west1`. Si no hay `NOTES_TOKEN`, lo genera y lo guarda en `.env`. Al terminar imprime la URL.
+
+Atlas tiene que aceptar `0.0.0.0/0`, porque Cloud Run no sale por una IP fija.
+
 ## GitHub
 
 https://github.com/DanyPreisz/notas-vanilla
 
-## Cloud Run
+Si cargás estos secrets, cada push a `main` despliega solo:
 
-Atlas tiene que aceptar `0.0.0.0/0`, porque Cloud Run no sale por una IP fija.
-
-```bash
-export PROJECT_ID="tu-proyecto"
-export MONGODB_URI="mongodb+srv://..."
-export MONGODB_DB=notas
-export NOTES_TOKEN="$(openssl rand -hex 24)"
-bash deploy-cloud-run.sh
-```
-
-El servicio escucha en `0.0.0.0` y en el `PORT` que inyecta Cloud Run (8080 en la imagen).
+- `GCP_SA_KEY`: JSON de una cuenta de servicio con Cloud Run Admin y Cloud Build Editor
+- `GCP_PROJECT_ID`
+- `MONGODB_URI`
+- `MONGODB_DB` (opcional, default `notas`)
+- `NOTES_TOKEN` (opcional)
